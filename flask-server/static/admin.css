@@ -1,0 +1,78 @@
+/* Begin Admin Home  */
+.admin {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 15rem auto;
+} 
+
+.admin .btn {
+    width: 13rem;
+    height: 5rem;
+    font-size: larger;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    margin: 0 auto;
+    padding-top: 18px;
+    justify-content: space-around;
+}
+
+.header .btn {
+    height: 3rem;
+}
+/* end admin Home  */
+
+
+
+/* Begin Admin Reservations  */
+
+table.table {
+    margin: 20px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal; */
+}
+
+table.table thead tr {
+    background-color: #36304a;
+}
+
+table.table thead tr th {
+    color: whitesmoke;
+}
+
+
+/* end admin Reservations  */
+
+table.table tbody .tr-order {
+    cursor: pointer;
+    
+}
+
+
+
+/* One order  */
+
+table.table tbody tr td.action {
+    width: 15rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+form.form-search>div {
+    width: 50%;
+    margin: 0 auto;
+  }
+/* Begin Admin ORDERS  */
+
