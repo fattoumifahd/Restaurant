@@ -78,7 +78,7 @@ export default function Signup() {
           alert(`Email verification send to ${info.email}`)
           // localStorage.setItem("token", res.data.token);
           // navigator("/login");
-          navigator('/mail_verify')
+          navigator('/mail_verify' ,{ state : {code : res.data.code , user_id : res.data.user_id } })
         }
       } catch (error) {
         console.log(error);

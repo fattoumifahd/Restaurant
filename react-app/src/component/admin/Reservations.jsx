@@ -32,7 +32,7 @@ export default function Reservations() {
   };
 
   const handleSearch = (search) => {
-    const res = reservations.filter((e) => e.user.telephone == search)
+    const res = reservations.filter((e) => e.user.telephone === search)
     setReservations(res)
 
   }
@@ -66,7 +66,7 @@ export default function Reservations() {
             </thead>
             <tbody>
               {reservations.map((r, i) => (
-                <tr key={i} border="1" style={i%2 == 0 ? {backgroundColor : "rgb(117 117 117 / 4%)"} : {backgroundColor : "whitesmoke"}} >
+                <tr key={i} border="1" style={i%2 === 0 ? {backgroundColor : "rgb(117 117 117 / 4%)"} : {backgroundColor : "whitesmoke"}} >
                   <td >{`${r.user.last_name} ${r.user.first_name}`}</td>
                   <td>{r.user.telephone}</td>
                   {/* {console.log(r.date.slice(0,2))} */}
@@ -75,7 +75,7 @@ export default function Reservations() {
                   {/* <td>{r.order_id == null ? "pas d'order" : r.order_id}</td> */}
                   <td>{`${r.date.slice(5, 16)} ${r.date.slice(17, 26)}`}</td>
                   <td style={{textAlign : "center"}}>
-                    {r.payer == true ? (
+                    {r.payer === true ? (
                       <button className="btn btn-success" disabled>
                         deja payer
                       </button>

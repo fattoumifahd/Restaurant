@@ -18,6 +18,7 @@ import AdminLogin from "./component/admin/Login";
 import AdminSingup from "./component/admin/Singup";
 import OneOrder from "./component/admin/OneOrder";
 import AddItem from "./component/admin/addItem";
+import MailVerification from "./component/MailVerification";
 
 
 
@@ -39,6 +40,7 @@ function App() {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/singup" element={<Signup />} />
+          <Route path="/mail_verify" element={<MailVerification />} />
           <Route path="/menuItems"   element={<MenuItems />}  />
           <Route path="/login" element={<Login />} />
           <Route path="/basketItems" element={<BasketItems />} />

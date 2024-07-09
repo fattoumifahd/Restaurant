@@ -126,28 +126,34 @@ def signup():
         # token = s.dumps(email , salt='email-verification')
         mes = Message("EMAIL VERFICATION" , recipients=[email], sender='fahdfattoumi8@gmail.com')
         
-        link = url_for('email_verification' , user_id=newUser.user_id , _external=True)
-        def get_format() :
-            return f"""{"".format(link)}"""
+        # link = url_for('email_verification' , user_id=newUser.user_id , _external=True)
+        # def get_format() :
+        #     return f"""{"".format(link)}"""
         try :
-            
-            mes.body= f"Please verifie your email by clicking in like bellow. \n {get_format()}"
+            opt = random.randint(000000,999999)
+            mes.body= f"Mail verifcation code : {opt} "
             mail.send(mes)
+            db.session.commit()
+            
         except :
             res = jsonify({"error" : "Error to sending mail"})
             res.status_code = 400
             return res
         # db.session.commit()
         
-        return {"messege" : "ok"}
+        return {"messege" : "ok" , "code" : opt , "user_id" : newUser.user_id}
     
-@app.route('/email_verification/<user_id>')
+@app.route('/email_verification/<user_id>' ,methods=["GET"])
 def email_verification(user_id):
-    user = Users.query.filter_by(user_id=user_id).update({'mail_verification' : 1})
-    db.session.commit()
-    # print(user.nom)
-    print(user)
-    return "email verified"
+    try :
+        Users.query.filter_by(user_id=user_id).update({'mail_verification' : 1})
+        db.session.commit()
+        # print(user.nom)
+        res = jsonify({"message" : "email Verified"})
+        res.status_code = 200
+        return res
+    except :
+        return {"error" : "error"}
     
 
 
@@ -156,7 +162,7 @@ def email_verification(user_id):
 def users(): 
     if request.method == "GET":
         res = Users.query.all()
-        print(res)
+        # print(res)
         emails = user_shema.dump(res)
         return emails
         
@@ -228,7 +234,7 @@ def logout() :
 def add_order():
     if request.method == "POST":
         data = request.get_json()
-        print(data)
+        # print(data)
         items = data['basket']
         new_order = Orders(user_id=data['user_id'] , prix_total=data['total'])
         db.session.add(new_order)
@@ -256,7 +262,7 @@ def forgetPass():
         email = request.json['email']
         print(email)
         all_charactere = string.ascii_letters + string.digits + string.punctuation
-        new_pass = "".join(random.choices(all_charactere , k = 12))
+        new_pass = "".join(random.choices (all_charactere , k = 12))
         print (new_pass)
         new_pass_hash = bcrypt.generate_password_hash(new_pass)
         Users.query.filter_by(email=email).update({"password" : new_pass_hash})

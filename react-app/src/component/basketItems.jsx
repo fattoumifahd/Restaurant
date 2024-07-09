@@ -152,7 +152,7 @@ export default function BasketItems() {
             Termine la command{" "}
           </button>
 
-          {total != 0 && (
+          {total !== 0 && (
             <div className="total d-flex align-items-center justify-content-sm-between w-25 mt-3">
               <h1>{total.toFixed(2)} DH</h1>
               <button className="btn btn-success" onClick={() => commander()}>
