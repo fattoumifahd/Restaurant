@@ -49,11 +49,11 @@ class Reservations(db.Model):
 
 class MenuItems(db.Model):
     item_id = db.Column(db.Integer , primary_key = True , autoincrement=True)
-    nom = db.Column(db.String(40))
-    description = db.Column(db.String(100))
-    prix = db.Column(db.Float)
-    categorie = db.Column(db.String(50))
-    image = db.Column(db.String(100))
+    nom = db.Column(db.String(40), nullable = False)
+    description = db.Column(db.String(100), nullable=False)
+    prix = db.Column(db.Float , nullable = False)
+    categorie = db.Column(db.String(50) , nullable= False)
+    image = db.Column(db.String(100) , nullable = False)
     order_item_id = db.relationship("OrderItem" , backref="MenuItems", lazy=True)
     def __init__(self, nom, description, prix, categorie, image):
         self.nom = nom 

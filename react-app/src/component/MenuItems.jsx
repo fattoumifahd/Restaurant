@@ -8,7 +8,7 @@ import NavBar from "./navBar";
 export default function MenuItems() {
   const location = useLocation();
   const [basket, setBasket] = useState([]);
-  const [items, setItems] = useState([{}]);
+  const [items, setItems] = useState(null);
   const { cate } = location.state;
   //   const [categorie , setCategorie] = useState(cate)
   useEffect(() => {
@@ -33,13 +33,13 @@ export default function MenuItems() {
     setBasket(basket.filter((item) => item.id !== id));
   };
 
-  return (
+  return items === null ? <CircularIndeterminate /> : (
     <>
     <NavBar />
     <div className="container">
       <div className="wrapper">
         {/* {console.log(basket)} */}
-        {items == [{}] ? (
+        {items == null ? (
           <CircularIndeterminate />
         ) : (
           items.map((item, i) => {

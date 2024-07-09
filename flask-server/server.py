@@ -131,11 +131,13 @@ def signup():
             return f"""{"".format(link)}"""
         try :
             
-            mes.html = template_rendered("mail-verification.html", link=get_format())
+            mes.body= f"Please verifie your email by clicking in like bellow. \n {get_format()}"
             mail.send(mes)
-        except Exception :
-            print("error")
-        db.session.commit()
+        except :
+            res = jsonify({"error" : "Error to sending mail"})
+            res.status_code = 400
+            return res
+        # db.session.commit()
         
         return {"messege" : "ok"}
     
@@ -164,10 +166,6 @@ def Menu_Items(categorie):
     if request.method == "GET":
         res = MenuItems.query.filter_by(categorie = categorie)
         items = menu_items_shema.dump(res)
-#         cur = db.cursor()
-#         cur.execute("select * from MenuItems where categorie=%s",(categorie,))
-#         rows = cur.fetchall()
-#         data = get_array_objct(rows , cur.column_names)
     return items
 
 
@@ -369,18 +367,21 @@ def admin_reservations():
         usr_res = []
         for r in res:
             print(r.Users)
+            user = {
+                "user_id" : r.user_id,
+                "first_name" : r.Users.prenom,
+                "last_name" : r.Users.nom,
+                "telephone" : r.Users.telephone
+            }
             obj = {
                 "id" : r.id,
                 "order_id" : r.order_id,
-                "user_id" : r.user_id,
                 "compus_place": r.Compus.place,
                 "compus_id" : r.compus_id,
                 "compus_ville" : r.Compus.ville,
-                "user_first_name" : r.Users.prenom,
-                "user_last_name" : r.Users.nom,
-                "user_id" : r.Users.user_id,
                 "payer" : r.payment,
                 "date" : r.timestamp,
+                "user" : user
 
                 
                 
@@ -419,7 +420,8 @@ def admin_orders():
                     "telephone" : order.Users.telephone
                     },
                 "order_date" : order.order_date,
-                "payer" : order.payer
+                "payer" : order.payer,
+                "prix" : order.prix_total
             }
             result.append(obj)
             
@@ -492,35 +494,15 @@ def add_item():
     for file in files:
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            print(filename)
             file.save(os.path.join(f'static/images/{categorie}/', filename))
+            menu = MenuItems(nom, description , prix ,  categorie, filename )
             try: 
-                menu = MenuItems(nom = nom, prix = prix, categorie = prix, image = filename , description= description)
                 db.session.add(menu)
                 db.session.commit()
                 res = jsonify({"message" : "Item added "})
-                
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                # SEEEEEEEEEENDING RESPOOOOOOOOONSE
-                return 
+                res.status_code = 200
+                return res
             except :
                 res = jsonify({"error" : "Error in adding item"})
                 res.status_code = 400

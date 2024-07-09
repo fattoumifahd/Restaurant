@@ -43,7 +43,7 @@ export default function NavBar() {
       console.log(error);
     }
   };
-  return (
+  return login !== false &&  (
     <>
       <div className="menu-bar">
         <h1 className="logo">
@@ -93,7 +93,7 @@ export default function NavBar() {
           }
           {
             user != null  && 
-            <li><Link to={'/userReservation'} state={{"user" : user}} >My Reservation</Link></li>
+            <li><Link to={'/userReservation'} state={{"user" : user}} >My Reservations</Link></li>
           }
           
         </ul>

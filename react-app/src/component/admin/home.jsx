@@ -48,7 +48,7 @@ export default function AdminHome() {
     <div className="admin">
       <button className="btn btn-success" onClick={()=> navigate("/admin/orders")}>Commands</button>
       <button className="btn btn-success" onClick={()=> navigate("/admin/reservations")}>Reservations</button>
-      <button className="btn btn-success" onClick={()=> navigate("/admin/add_item")}>Add item</button>
+      <button className="btn btn-success" onClick={()=> navigate("/admin/add_item")}>Ajouter Produit</button>
     </div>
     </>
     }

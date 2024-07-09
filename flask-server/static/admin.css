@@ -51,7 +51,7 @@ table.table thead tr th {
 
 /* end admin Reservations  */
 
-table.table tbody .tr-order {
+table.table tbody .tr-order :nth-child(-n + 4) {
     cursor: pointer;
     
 }
@@ -69,10 +69,16 @@ table.table tbody tr td.action {
 }
 
 
-
-form.form-search>div {
-    width: 50%;
+.form-search>div>input{
+    width: 16rem;
+}
+.form-search>div {
+    width: 20%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 /* Begin Admin ORDERS  */
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ForgetPass from "./ForgetPass";
 
@@ -7,9 +7,14 @@ export default function Login() {
   const [info, setInfo] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
   const [login, setLogin] = useState();
+  // const atempt = useRef(0)
+
   const navigate = useNavigate();
   useEffect(() => {
     get_login();
+    // if (localStorage.error == "true"){
+    //   setError(true)
+    // }
   }, []);
   const get_login = async () => {
     try {
@@ -29,14 +34,17 @@ export default function Login() {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    let atempt = 0
+    
     if (info.email !== "" && info.password !== "") {
       try {
         let res = await axios.post("/api/login", info);
         console.log(res.data);  
         if (res.data.user == null) {
-          atempt +=1
-          atempt >= 2 && window.location.reload() 
+          // atempt.current = atempt.current + 1
+          // if (atempt.current >= 2 ) {
+          //   localStorage.error = true
+          //   window.location.reload()
+          // }
           setError(true);
 
           console.log("condition");

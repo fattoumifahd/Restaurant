@@ -7,7 +7,7 @@ export default function Home() {
     <NavBar />
     <div>
       <div className="slide1">
-        <h1 className="text">GooD Food TO PUT YOU IN A GOOD MODE.</h1>
+        <h1 className="text">GooD Foods TO PUT YOU IN A GOOD MODE.</h1>
         <span className="sup">Big Umani flavour, small footprint.</span>
       </div>
       <div className="slide2">

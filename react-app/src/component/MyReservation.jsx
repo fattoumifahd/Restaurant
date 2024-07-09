@@ -2,9 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import NavBar from './navBar'
+import CircularIndeterminate from './CircularIndeterminate'
 
 export default function MyReservation() {
-  const [reservations , setReservation] = useState([])
+  const [reservations , setReservation] = useState(null)
   const location = useLocation()
 
   const get_reservations = async () => {
@@ -22,9 +23,12 @@ export default function MyReservation() {
     get_reservations()
   }, [])
     
-return (
+return reservations == null ? <CircularIndeterminate /> : (
+
     <div>
+      
       <NavBar />
+      {reservations.length !== 0 ?  
       <table className='table mt-5'>
         <thead>
           <tr>
@@ -47,6 +51,8 @@ return (
           }
         </tbody>
       </table>
+      : <p className='title'>Aucune Reservation</p>}
     </div>
+        
   )
 }

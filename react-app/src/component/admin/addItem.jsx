@@ -26,8 +26,8 @@ export default function AddItem() {
   };
   const handleChange = (target) => {
     // console.log(target.attribut);
-    if (target.name == "image") {
-      console.log(target.files[0].type);
+    if (target.name === "image") {
+      // console.log(target.files[0].type);
       let imageArray = [];
       // for (let i = 0 ; i < target.files.length ; i++) {
       fileValidate(target.files[0]);
@@ -45,20 +45,38 @@ export default function AddItem() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    for (let i = 0; i < itemInfo.image.length; i++) {
-      data.append("files[]", itemInfo.image[i]);
-    }
-    data.append("nom", itemInfo.nom);
-    data.append("categorie", itemInfo.categorie);
-    data.append("description", itemInfo.description);
-    data.append("prix", itemInfo.prix);
+    if (
+      itemInfo.nom !== "" && 
+      itemInfo.prix !== "" &&
+      itemInfo.categorie !== ""
 
-    try {
-      const res = await axios.post("/admin/add_item", data);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
+    ) {
+      data.append("files[]", itemInfo.image[0]);
+      data.append("nom", itemInfo.nom);
+      data.append("categorie", itemInfo.categorie);
+      data.append("description", itemInfo.description);
+      data.append("prix", itemInfo.prix);
+      try {
+        const res = await axios.post("/admin/add_item", data);
+        console.log(res.data);
+        if (res.data.message) {
+          alert("Message : " + res.data.message)
+          window.location.reload()
+        }
+      } catch (error ) {
+        console.log(error.response.data.error);
+        setResponse({"error" : error.response.data.error})
+      }
+    } else {
+      setResponse({ error: "Please fill all the fields" });
+      
     }
+    // for (let i = 0; i < itemInfo.image.length; i++) {
+    // }
+    
+    // d  
+
+    
   };
   return (
     <div>
@@ -83,6 +101,8 @@ export default function AddItem() {
                 placeholder="Nom"
                 onChange={(e) => handleChange(e.target)}
               />
+              
+              {respone.error !== "" && itemInfo.nom === "" && <span className="text-danger">require filed</span>}
               <select
                 name="categorie"
                 className="form-control form-select"
@@ -106,18 +126,22 @@ export default function AddItem() {
                   Plat Procipal
                 </option>
               </select>
+              {respone.error && itemInfo.categorie === "" && <span className="text-danger">require filed</span>}
               <input
                 type="text"
                 className="input"
                 name="prix"
                 placeholder="Prix"
                 onChange={(e) => handleChange(e.target)}
+                
               />
+              {respone.error && itemInfo.nom === "" && <span className="text-danger ">require filed</span>}
               <textarea
                 name="description"
                 id=""
                 className="input"
                 placeholder="Description"
+                onChange={(e) => handleChange(e.target)}
               ></textarea>
               <input
                 type="file"

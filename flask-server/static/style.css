@@ -402,6 +402,9 @@ div.table-container {
 table.table {
   width: 60rem;
 }
+table.table.reservations {
+  width: 64rem;
+}
 
 table.table td.qte {
   width: 75%;
@@ -559,9 +562,28 @@ table.table tr h6 {
   padding-top: 10px;
   
 }
+table.table tr.tr-basket :nth-child(4) {
+  width: 1rem;
+  text-align: center;
+}
 
 
+
+
+p.title {
+  font-family: math;
+    margin: 6rem auto;
+    width: 26rem;
+    font-size: 2.6rem;
+}
+
+
+i.bi.bi-trash3-fill {
+  font-size: 1.5rem;
+  color: red;
+}
 /* span.MuiCircularProgress-root.MuiCircularProgress-indeterminate.MuiCircularProgress-colorPrimary.css-18lrjg1-MuiCircularProgress-root {
   width: 10rem;
   height: 11rem;
 } */
+
