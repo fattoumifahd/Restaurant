@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [changer, setChanger] = useState();
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState({
+    name: "",
+    obj: { exits: false, similiers: [] },
+  });
   const navigate = useNavigate();
 
   const get_orders = async () => {
@@ -35,8 +38,29 @@ export default function Orders() {
     navigate(`/order/${order.order_id}`, { state: { order: order } });
   };
 
+  function pupUp(val) {
+    let len = val.toString().length;
+    let phonesNumbers = orders.map((ord) => ord.user.telephone);
+    let similiers = phonesNumbers.filter((number) => {
+      if (number.slice(0, len) === val) {
+        return number;
+      }
+    });
+    console.log(similiers);
+    let uniques = [...new Set(similiers)];
+    console.log(uniques);
+    if (uniques.length > 0) {
+      setSearch({
+        ...search,
+        obj: { exits: true, similiers: uniques },
+        name: val,
+      });
+    }
+  }
+
   const handleChange = ({ target }) => {
-    setSearch(target.value);
+    setSearch({ ...search, name: target.value });
+    pupUp(target.value);
   };
 
   const handleSearch = (search) => {
@@ -53,17 +77,32 @@ export default function Orders() {
         <div>
           <input
             type="search"
+            value={search.name}
             className="form-control"
             onChange={(e) => handleChange(e)}
           />
+          {search.obj.exits && (
+        <div className="pup-up">
+          <ul className="list-group">
+            {search.obj.similiers.map((num, i) => (
+              <div className="list-group-item" value={num} key={i}
+                onClick={(e)=> setSearch({...search , obj : { exits : false } , name : num})}>
+                <b className="text-primary">{search.name}</b>
+                {num.slice(search.name.length)}
+              </div>
+            ))}
+          </ul>
+        </div>
+      )}
           <button
             className="btn btn-primary"
-            onClick={() => handleSearch(search)}
+            onClick={() => handleSearch(search.name)}
           >
             Search
           </button>
         </div>
       </div>
+      
       <table className="table mt-5 table-hover">
         <thead>
           <tr>
@@ -79,7 +118,7 @@ export default function Orders() {
             <th>
               <h6>Prix</h6>
             </th>
-            <th style={{ textAlign : "center"}}>
+            <th style={{ textAlign: "center" }}>
               <h6>Payer</h6>
             </th>
           </tr>
@@ -94,27 +133,27 @@ export default function Orders() {
                   ? { backgroundColor: "rgb(117 117 117 / 4%)" }
                   : { backgroundColor: "whitesmoke" }
               }
-              
             >
-                <td onClick={() => handleClick(o)}>{`${o.user.nom} ${o.user.prenom}`}</td>
-                <td onClick={() => handleClick(o)}>{o.user.telephone}</td>
-                <td onClick={() => handleClick(o)}>{`${o.order_date.slice(5, 16)} ${o.order_date.slice(
-                  17,
-                  25
-                )}`}</td>
-                <td onClick={() => handleClick(o)}>{o.prix}</td>
-              <td style={{textAlign: "center"}}>
+              <td
+                onClick={() => handleClick(o)}
+              >{`${o.user.nom} ${o.user.prenom}`}</td>
+              <td onClick={() => handleClick(o)}>{o.user.telephone}</td>
+              <td onClick={() => handleClick(o)}>{`${o.order_date.slice(
+                5,
+                16
+              )} ${o.order_date.slice(17, 25)}`}</td>
+              <td onClick={() => handleClick(o)}>{o.prix}</td>
+              <td style={{ textAlign: "center" }}>
                 {!o.payer ? (
                   <button
                     onClick={() => handlePayment(o.order_id)}
                     className="btn btn-warning text-white"
                   >
-                    
                     impayé
                   </button>
                 ) : (
                   <button className="btn btn-success" disabled>
-                    deja payé  
+                    deja payé
                   </button>
                 )}
               </td>

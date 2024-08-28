@@ -82,3 +82,14 @@ table.table tbody tr td.action {
   }
 /* Begin Admin ORDERS  */
 
+div.pup-up {
+    position: absolute;
+    left: 42.2rem;
+    background: white;
+    width: 16rem;
+    top: 7.1rem;
+}
+
+.list-group {
+    width: 16rem;
+}

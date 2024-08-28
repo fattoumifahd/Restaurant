@@ -45,7 +45,7 @@ app.config['SESSION_REDIS'] = redis.from_url('redis://127.0.0.1:6379')
 app.config["MAIL_SERVER"] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'fahdfattoumi8@gmail.com'
-app.config['MAIL_PASSWORD'] = 'htep xcht svbb yhun'
+app.config['MAIL_PASSWORD'] = 'qesr csqp genl igxn'
 app.config['MAIL_USE_TL5'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['UPLOAD_FOLDER'] = 'static/images'
@@ -340,7 +340,7 @@ def admin_login():
         print(admin)
         if admin is None :
             return {"error" : "this Admin not exists"}
-        elif not bcrypt.check_password_hash(admin['password'] , data['password']) :
+        elif not bcrypt.check_password_hash(admin['password'] ,data['password']) :
             return {"error" : "password incorrect"}
         else :
             admin_login = admin_schema.dump(admin)

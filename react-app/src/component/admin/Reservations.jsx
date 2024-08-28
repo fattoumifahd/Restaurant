@@ -36,10 +36,11 @@ export default function Reservations() {
     setReservations(res)
 
   }
-
+  
   const handleChange = ({target}) => {
-    setSearch(target.value)
+    setSearch(target.value);
     
+    // let similers = reservations.filter(res => res.user.telephone ==  )
   } 
   return reservations == null ? <CircularIndeterminate /> :  (
     <>
